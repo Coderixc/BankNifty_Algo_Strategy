@@ -22,7 +22,7 @@ mMA100 = "MA100"
 """Step 2: Load CSV file into memory """
 path = ".//Data//512023+2023-01-05.csv"
 df = pd.read_csv( path )
-# print(df)
+print(df)
 
 #  Allow Data from  Range( 9:15 to 15:30)   //2023-01-05 14:54:00
 # df["Date"] =  pd.to_datetime(df[mDate] , format='%Y-%m-%d').dt.date
@@ -123,6 +123,7 @@ df_Trades = pd.DataFrame(
     ltp is Close (Assumed)        
 
  """
+
 
 
 """  When this Will Not Works  
