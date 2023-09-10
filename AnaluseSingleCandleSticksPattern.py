@@ -17,16 +17,19 @@ class OHLCHeader :
 
 #  Read INTRADY OHLC + Volume + PerChange Data from NSE Bhav Copy
 
-class Indicator :
+class SingleChartPattern :
 
     # path = ".//Data//cm17AUG2023bhav.csv"
     # df_BhavCopy = pd.read_csv( path )
 
     def initilize_global_varibles( self ) :
-        self.MINCLOSE = 100
+        print( "Initializing" )
+        self.MINCLOSE = 30
         self.MINVOLUME = 50000
-        self.SERIESALLOWED = ["EQ","BE"]
-        path = ".//Data//cm17AUG2023bhav.csv"
+        self.SERIESALLOWED = [ "EQ" ]  # ["EQ","BE"]
+
+        filename = "cm30AUG2023bhav"
+        path = ".//Data//"+filename+".csv"
         self.df_BhavCopy = pd.read_csv( path )
 
         count = self.df_BhavCopy.shape[ 0 ]
@@ -34,6 +37,7 @@ class Indicator :
 
         self.List_Bullish_Marubuzo = [ ]
         self.List_Bearish_Marubuzo = [ ]
+        print( "BHAV COPY Loaded: " , filename )
 
     # Loop & Iterate
 
@@ -41,7 +45,7 @@ class Indicator :
 
         for idx , record in self.df_BhavCopy.iterrows( ) :
 
-            if( record[OHLCHeader.mSeries] not in self.SERIESALLOWED):
+            if (record[ OHLCHeader.mSeries ] not in self.SERIESALLOWED) :
                 continue
 
             tradingSymbol = record[ OHLCHeader.mTradingSymbol ]
@@ -54,7 +58,7 @@ class Indicator :
             if (c <= self.MINCLOSE) :
                 continue  # pass to next iteration
 
-            if (v <= self.MINCLOSE) :
+            if (v <= self.MINVOLUME) :
                 continue  # pass to next iteration
 
             """ GREEN COLOR CANDLE """
@@ -92,7 +96,7 @@ class Indicator :
 # __name__
 if __name__ == "__main__" :
     """ Load indicator object """
-    ind = Indicator( )
+    ind = SingleChartPattern( )
 
     """ Read or Load Bhav Copy Equity Data , contain O H L C """
     ind.initilize_global_varibles( )
